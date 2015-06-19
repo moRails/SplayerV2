@@ -8,7 +8,7 @@ void ofApp::setup(){
         film[i].loadMovie("film" + ofToString(i) + ".mp4");
         if (i > 0)
         {
-            film[i].setLoopState(OF_LOOP_NONE);
+            film[i].setLoopState(OF_LOOP_NONE); //-- not for the starting loop
         }
     }
 
@@ -40,7 +40,7 @@ void ofApp::update(){
             film[filmNumber].play();
         }
     }
-    if (filmNumber < 4 && film[filmNumber].getIsMovieDone())
+    if (filmNumber < 4 && film[filmNumber].getIsMovieDone()) //-- if the language loop is done go to loop 0
     {
         beforeSwitchFilm();
         filmNumber = 0;
@@ -188,7 +188,7 @@ void ofApp::keyReleased(int key){
         film[filmNumber].play();
     }
 
-    if (filmNumber > 15)
+    if (filmNumber > 15) //-- Just a security
     {
         filmNumber = 0;
     }
