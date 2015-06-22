@@ -37,6 +37,8 @@ void ofApp::setup(){
     film[filmNumber].play();
     filmOnPause = true;
     
+    getTimePause = 0;
+    
 }
 
 //--------------------------------------------------------------
@@ -67,12 +69,34 @@ void ofApp::update(){
         filmNumber = 0;
         film[filmNumber].play();
     }
+    if (filmOnPause == 0)
+    {
+        if (getTimePause + 600 < ofGetElapsedTimef())
+        {
+            if (filmNumber > 3 && filmNumber < 8)
+            {
+                filmNumber = 1;
+            }
+            else if (filmNumber > 7 && filmNumber < 12)
+            {
+                filmNumber = 2;
+            }
+            else if (filmNumber > 11 && filmNumber < 16)
+            {
+                filmNumber = 3;
+            }
+            film[filmNumber].play();
+            filmOnPause = true;
+        }
+    }
 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+
     film[filmNumber].draw(fPosX, fPosY, fWidth, fHeight);
+    
     if(showGui)
     {
         gui.draw();
@@ -83,6 +107,9 @@ void ofApp::draw(){
         ofDrawBitmapString("FrameRate = "   + ofToString(ofGetFrameRate()), infoPosX, infoPosY);
         ofDrawBitmapString("film number = " + ofToString(filmNumber),       infoPosX, infoPosY + 20);
         ofDrawBitmapString("Pause state = " + ofToString(filmOnPause),      infoPosX, infoPosY + 40);
+        ofDrawBitmapString("TimePaused  = " + ofToString(getTimePause),     infoPosX, infoPosY + 60);
+        ofDrawBitmapString("chrono      = " + ofToString((int)ofGetElapsedTimef()), infoPosX, infoPosY + 80);
+        
     }
 
 }
@@ -119,6 +146,7 @@ void ofApp::keyReleased(int key){
         {
             filmOnPause = !filmOnPause;
             film[filmNumber].setPaused(!filmOnPause);
+            getTimePause = ofGetElapsedTimef();
         }
 
     }
