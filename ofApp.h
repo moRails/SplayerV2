@@ -25,5 +25,19 @@ class ofApp : public ofBaseApp{
     ofVideoPlayer film[16];
     int  filmNumber;
     bool filmOnPause;
+    
+    int filmWidth,filmHeight;
+    int filmPosX, filmPosY;
+    
+    ofxIntSlider fWidth;
+    ofxIntSlider fHeight;
+    ofxIntSlider fPosX;
+    ofxIntSlider fPosY;
+    ofxIntSlider infoPosX;
+    ofxIntSlider infoPosY;
+    ofxPanel gui;
+    bool showGui;
+    bool showCursor;
+
 		
 };

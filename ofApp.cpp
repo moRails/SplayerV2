@@ -3,6 +3,27 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    ofBackground(0, 0, 0);
+    
+    filmWidth  = ofGetWindowWidth(); // change it later with the saving data
+    filmHeight = ofGetWindowHeight(); // change it later with the saving data
+    filmPosX = 0;
+    filmPosY = 0;
+    
+    gui.setup();
+    gui.add(fWidth.setup ( "fWidth",  filmWidth,  0, ofGetWindowWidth()	));
+    gui.add(fHeight.setup( "fHeight", filmHeight, 0, ofGetWindowHeight()));
+    gui.add(fPosX.setup( "fPosX", filmPosX, 0, ofGetWindowWidth()));
+    gui.add(fPosY.setup( "fPosY", filmPosY, 0, ofGetWindowHeight()));
+    gui.add(infoPosX.setup( "infoPosX", filmWidth/2, 0, ofGetWindowWidth()));
+    gui.add(infoPosY.setup( "infoPosY", filmHeight/2, 0, ofGetWindowHeight()));
+    
+    gui.loadFromFile("settings.xml");
+    
+    showGui = false;
+    showCursor = false;
+    CGDisplayHideCursor(NULL);
+    
     for (int i = 0; i < 16; i++)
     {
         film[i].loadMovie("film" + ofToString(i) + ".mp4");
@@ -51,14 +72,41 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    film[filmNumber].draw(0,0);
-    ofDrawBitmapString("film number = " + ofToString(filmNumber), 20, 20);
-    ofDrawBitmapString("Pause state = " + ofToString(filmOnPause),20, 40);
+    film[filmNumber].draw(fPosX, fPosY, fWidth, fHeight);
+    if(showGui)
+    {
+        gui.draw();
+        ofSetColor(0, 200);
+        ofFill();
+        ofRect(infoPosX - 20,infoPosY - 20,300, 200);
+        ofSetColor(255);
+        ofDrawBitmapString("FrameRate = "   + ofToString(ofGetFrameRate()), infoPosX, infoPosY);
+        ofDrawBitmapString("film number = " + ofToString(filmNumber),       infoPosX, infoPosY + 20);
+        ofDrawBitmapString("Pause state = " + ofToString(filmOnPause),      infoPosX, infoPosY + 40);
+    }
 
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    if (key == 'f')
+    {
+        ofToggleFullscreen();
+    }
+    
+    if (key == 'g')
+    {
+        showGui =! showGui;
+        showCursor = !showCursor;
+        if (showCursor == true)
+        {
+            CGDisplayShowCursor(NULL);
+        }
+        else if ( showCursor == false)
+        {
+            CGDisplayHideCursor(NULL);
+        }
+    }
 
 }
 
