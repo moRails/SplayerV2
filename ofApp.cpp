@@ -97,6 +97,12 @@ void ofApp::draw(){
 
     film[filmNumber].draw(fPosX, fPosY, fWidth, fHeight);
     
+    if(filmOnPause == false)
+    {
+        ofSetColor(255, 255, 255);
+        ofRect(fPosX + fWidth/2 - 20, fPosY + fHeight/2 - 30, 10, 60);
+        ofRect(fPosX + fWidth/2 + 20, fPosY + fHeight/2 - 30, 10, 60);
+    }
     if(showGui)
     {
         gui.draw();
@@ -274,6 +280,7 @@ void ofApp::keyReleased(int key){
 //--------------------------------------------------------------
 void ofApp::beforeSwitchFilm()
 {
+    filmOnPause = true;
     film[filmNumber].stop();
     film[filmNumber].firstFrame();
 }
