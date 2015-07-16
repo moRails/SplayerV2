@@ -36,6 +36,7 @@ class ofApp : public ofBaseApp{
     ofxFloatSlider fRotationZ;
     ofxIntSlider infoPosX;
     ofxIntSlider infoPosY;
+    ofxIntSlider pauseButtonPosY;
     ofxPanel gui;
     bool showGui;
     bool showCursor;

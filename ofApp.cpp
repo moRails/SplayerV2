@@ -4,7 +4,7 @@
 void ofApp::setup(){
     
     ofBackground(0, 0, 0);
-    
+    ofSetCircleResolution(100);
     filmWidth  = ofGetWindowWidth(); // change it later with the saving data
     filmHeight = ofGetWindowHeight(); // change it later with the saving data
     filmPosX = 0;
@@ -17,7 +17,7 @@ void ofApp::setup(){
     gui.add(fPosY.setup( "fPosY", filmPosY, 0, ofGetWindowHeight()));
     gui.add(infoPosX.setup( "infoPosX", filmWidth/2, 0, ofGetWindowWidth()));
     gui.add(infoPosY.setup( "infoPosY", filmHeight/2, 0, ofGetWindowHeight()));
-    
+    gui.add(pauseButtonPosY.setup( "pauseButtonPosY", fPosY + filmHeight/2 -30, 0, ofGetWindowHeight()));
     gui.loadFromFile("settings.xml");
     
     showGui = false;
@@ -100,8 +100,12 @@ void ofApp::draw(){
     if(filmOnPause == false)
     {
         ofSetColor(255, 255, 255);
-        ofRect(fPosX + fWidth/2 - 20, fPosY + fHeight/2 - 30, 10, 60);
-        ofRect(fPosX + fWidth/2 + 20, fPosY + fHeight/2 - 30, 10, 60);
+        ofCircle(fPosX + fWidth/2, pauseButtonPosY + 30, 60);
+        ofSetColor(0, 0, 0);
+        ofCircle(fPosX + fWidth/2, pauseButtonPosY + 30, 58);
+        ofSetColor(255, 255, 255);
+        ofRect(fPosX + fWidth/2 - 30, pauseButtonPosY, 20, 60);
+        ofRect(fPosX + fWidth/2 + 10, pauseButtonPosY, 20, 60);
     }
     if(showGui)
     {
